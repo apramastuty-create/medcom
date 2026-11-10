@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex"><title>Verifikasi Sertifikat</title>
+<style>
+:root{--bg:#f4f7fb;--card:#fff;--tx:#14213d;--mut:#5c6b80;--ok:#0f9d58;--okbg:#e6f6ee;--no:#d93025;--nobg:#fdecea;--bd:#e1e7ef}
+@media(prefers-color-scheme:dark){:root{--bg:#0d1420;--card:#16202f;--tx:#e8eef8;--mut:#93a3b8;--okbg:#10301f;--nobg:#3a1612;--bd:#26344a}}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+.card{width:100%;max-width:460px;background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:28px 24px;box-shadow:0 10px 30px rgba(0,0,0,.08);text-align:center}
+h1{font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);margin:0 0 18px;font-weight:600}
+.ic{width:84px;height:84px;margin:0 auto 12px}
+.ic circle{fill:none;stroke-width:5;stroke-dasharray:226;stroke-dashoffset:226;animation:d .7s ease forwards}
+.ic path{fill:none;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:60;stroke-dashoffset:60;animation:d .5s .5s ease forwards}
+@keyframes d{to{stroke-dashoffset:0}}
+.ok .ic *{stroke:var(--ok)}.no .ic *{stroke:var(--no)}
+.st{font-size:22px;font-weight:700;margin:0 0 4px}.ok .st{color:var(--ok)}.no .st{color:var(--no)}
+.sub{color:var(--mut);font-size:14px;margin:0 0 18px}
+dl{margin:0;text-align:left;border-top:1px solid var(--bd)}
+.r{padding:11px 0;border-bottom:1px solid var(--bd)}dt{font-size:12px;color:var(--mut);margin-bottom:2px}dd{margin:0;font-weight:600;font-size:15px;word-break:break-word}
+.badge{display:inline-block;margin-top:16px;padding:6px 12px;border-radius:99px;font-size:12px}.ok .badge{background:var(--okbg);color:var(--ok)}.no .badge{background:var(--nobg);color:var(--no)}
+form{display:flex;gap:8px;margin-top:18px}input{flex:1;min-width:0;padding:12px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);font-size:16px;text-transform:uppercase;letter-spacing:.08em}
+button{padding:12px 16px;border:0;border-radius:10px;background:#1f5fbf;color:#fff;font-weight:600;font-size:15px;cursor:pointer}
+.ft{margin-top:20px;font-size:12px;color:var(--mut)}
+</style></head><body><main class="card" id="c"></main>
+<script>
+const RECS={"cfbbbf524d560e41b6ccb18286ac940affeb6efbb4dcff284d07a32c15e8be30": "VUyEXoNAEFMkNMXE.hHIY/Fu+pkpnXxDsKmquJKf7DjK3oz9VtE58GZzCgwB1GoCF/OgI7eVmEF7KOGJo5e3qf3Tn3buegwJtb8j86NPwfgOXGykph620qPryc8SrbVVtH944Jr9OvtBfDBaSuCJa68gqeOC3uYy6FPjta5gOJ6+O2b6j9kzcPEDTRYyA+qla3CrQ/pXD4xdM4mdBOJ9me0FPuuNmbiFgAj0v6JXFjpYuGDegMTokiitrKiZqAku+DHguAGJYuTuN+FjaDI/OEoV7+0f9WQ==", "c321bebf8bcff12f15e971fce95ddcbb79c0dcfa1034009670b814d408133234": "8W6q7DTBi74Fa7+/.AXP0B7xo+YDmR/NdjTxEvPnspuvwlx/uOvT4loNjMsl7yddbzViD+oYV6loaCiFX1x4zNBiTLDMwuowQv2gm9UNxYyUQuEDNnea1Q+9ggSw/oh6OIdmyVxb5Uqfe8mH13A/YrtbHgGZkkUFWcrSU/gTf891QCHC2vwQjEmAdIqKAXXj/Odc3iRcVRizkJ7geIBF77JEInYKyCaaDWIUesTrYTJGiJFqDyvckwC6q0/9MDoLDlQP5eiw+SJeNW4lqg9fqyns=", "53ca4921a986e8299f4289a28a61911fb48a58c42643463ae65278c22baf1257": "hZ2g+PKUYSxvW/Rc.c1+zcPNe2Fg4Lh/KxU41zeQqF3m/xAun/EZBZbmv63GURpRLKPlVSeBlh4EcYU6TrAqkibOiAc4iBTqPEtyJBiOH+fpQut4DgpX86sA86NCMD4t+4fGMrCAq5j11EFX0/RfMuHnOeRyupL26guPXdfzoAq6RoyMz8Bna+ps3+Y5PU+B3N1pcJ8HBst9YvaConfAaxQ/zb+88ONFC3f+zylMX6Um0/ZBn5yFFi4ezq2bnxKWL+M/LSCw+W6YVZ5vdHRzGIyqAwSNw9A==", "aa134e37f4fc4da9681b81bf57e5c7fcfd2ea6dfed54755a6198fbe9ca3649af": "u0xjQAX7hqpx8805.sTiIzcIGvJ/erzFhzhU7IroyZYeFw6yczmtG93cRYo2yEPzZtv72EwExAbWpGwoljN8E9+aborbbthh8799d+T1XnQXQvyJbd79cADcQM/5CJUDQx9FXaB0cilt6Sc0UA1YKZa8EJwFVHtDmAA/RrEsfduC0k6THculCIjh0bhKk6rWLrFJEacqWpkauJSSxNIKReAVpnAcneQKUIHq/p3Nqa20iwhZ1LMCEHQRhnA4dY73NmegYkThhEMm/cVEGug==", "80fb9a8a615fe4fe6da4201c800094bd08a52edd5684203e56d198d8c9a83940": "THz1VTBw/Oad7Ke3.L6toF6COcUQA6Cyt4/jktPE5nCWbrQUveZlJIHfz4AqjuyMS/2hUtHPEK57nlgxi/Rc+/XyZJRq/oTeEkluoRmCuih8Te/41SmOf1SEYgvHYvgmHZLiGBNWmXPdCOCH+89hbMJqMOuWq+5wIBDhGebElHULLaSfSTfUgC1rCXF6ncu9J7Gl4CjXCQ+ClcUCUVWrgi+ij0e7MjD0EH5vRYtBV/cVEuM/GLwqqceXBrVEc+Uky8ur40GHAsYbM3EpyOCFVszFr", "27058f30eab7c1685bc7afb14db7362b67bbeabb2e6b5bd8f9c61b2961d00413": "N7zAPzk8CzqWlhPi.YZV/uPufAHXGPEzraFpN7IgTXOGwn+k/c9V3SdYFS2lLcNrA7uPbHgj0HoOboBTbPMtb7rAnm/7XXH0sIxE2Q3+F1izacmDDdGwCpEoCxXmAyDyGi1D5NRjGYczyzduO7RByH9m3l0BzRaT+8ZRTKhVEyONZzfTCC7d363VD/5uNoaSZsyT24ie14T3qu01PjqIUwUcPknAWkuCAd06gzI2dDCdjlRbHb1lhleC7qVK6DeRd2k3SU3KFN+StLi5vtfoI", "0f616b1a27efe48ce8b06790010713d7a119ce6e0b0a7307cf6aeadff590d12b": "UtrlxoqLvRaPtsZ1.+GSeZ+G1N6mb1oowZFMLJ9oXXzc8AdaMP5WGCXk7HyoMBYqhnmS0xD82giPd5Gvfdf2YqKDFR998Nofek3Yazl/CiblWwxF+ixQBBa9dR4Z4TlqsfzScsUkg2yjTftizAH6Ur+MFuzJLcB8saXNVzl2QQt8aybPtcwxrXR49Ik+XJCojYbnBquHpuvPF6N5pYt3YoS/NM2zLrNEjwhTTX73JMBUxaCwFHuvYbnZX7+hvop2PnbXgnQYP6lAr268=", "a59894d91f6f2a6c1f3bc50dcedae5d3adcc47e143cc18f682b93491cd937fab": "3Oqqib28Z/3WZwsY.P7GkUOinANNJUyXpXEQXj0l+SAQZ4Uu3N5XWVUItOvD2a6844hs5Ls6J47/P8yQG52bfDxW07lNCchUV/xt82s3O8vuqnX3QCYTNAVb50jlQ9GrrZYH83565KitV5eWFgovtgx0Je1Bv0j6iq6gHtrLvAH/+N2cl0tkXWTvnCgSWyKSE6WD7eMvyloYvgzeC9av1+AYlZIntT8RE1VIhJ7hgyrF/Zi7XSjrHfdbtsBFUI9nZZwEKypYicSClTVKr2rjAYoN1", "e31701ae04ac6ee28df2b43982d68b128e48b094b025607a717e9ae44748dc5f": "zxTfbFuxeRJNsj0e.rnQylUX7/dwSHGjo3cwwfo9dvnAWIBmQmVrDGpx1EKw2t6aD6Jujd6jbwLg1/grTYZwZ6UFckC9fFyGb4k/IN2xQx4QO9o1YqN+/Q9mHR7qeY4gcHJf0x80D3JRtlx0vwa0cufsHc9bkWDKkEM7w/9WfhCOkpOrSjuM2moyVqnUvBmhZKOApDt7Gko9xvbeqCYQB7ml0q49NBYeWxkgchxRSHna0FnPrW3mqAcFPpZgfYAWi93uVpIj6CeLjB2ddpcTjmmOBIsdB", "7240e05f6e25cf3184e6bda52441bae5fa724b8c3aa88e66dede82af2c466914": "G5Botq3FKY64hWhY.Rk+rB1fzxOurbhdQ2U5VSkO82NT6l1XaOuX10Vn5rUnfgdEvMmSbLtyejQ0UQfJZmJsdSOuj+M4aLwyzv6wIMChUsYivG6cod0YeJ45muj80VKniGrc0/x7TUsKwVavTIp2r79dSghqIs8kaMeso22Exegl4S+/NAUSAOQ5Jf31lxTdT8/0QVWZlqzjwBU9z60ONoHlb9VR5vSRm7ZQ3hcuG711EbUr6FGK4tt2AX93eLwyR3Q1kzPZpKHImJpqjjg=="},SALT="JUbuJOQwBLnICY3JvqZA0w==",ITER=100000;
+const c=document.getElementById("c"),enc=new TextEncoder();
+const hex=b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("");
+const un=s=>Uint8Array.from(atob(s),x=>x.charCodeAt(0));
+const esc=s=>String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+const CHECK='<svg class="ic" viewBox="0 0 84 84"><circle cx="42" cy="42" r="36"/><path d="M26 43l11 11 21-23"/></svg>';
+const CROSS='<svg class="ic" viewBox="0 0 84 84"><circle cx="42" cy="42" r="36"/><path d="M30 30l24 24M54 30L30 54"/></svg>';
+const FORM='<form id="f"><input id="i" placeholder="Masukkan ID, mis. A7K9-2QX4" maxlength="9" autocomplete="off"><button>Cek</button></form>';
+async function lookup(id){
+  id=id.toUpperCase().replace(/\s/g,"");
+  const h=hex(await crypto.subtle.digest("SHA-256",enc.encode(id)));
+  const r=RECS[h]; if(!r) return null;
+  try{
+    const [iv,ct]=r.split(".");
+    const km=await crypto.subtle.importKey("raw",enc.encode(id),"PBKDF2",false,["deriveKey"]);
+    const k=await crypto.subtle.deriveKey({name:"PBKDF2",salt:un(SALT),iterations:ITER,hash:"SHA-256"},km,{name:"AES-GCM",length:256},false,["decrypt"]);
+    return JSON.parse(new TextDecoder().decode(await crypto.subtle.decrypt({name:"AES-GCM",iv:un(iv)},k,un(ct))));
+  }catch(e){return null}
+}
+function show(d,id){
+  const now=new Date().toLocaleString("id-ID",{dateStyle:"long",timeStyle:"short"});
+  c.className="card "+(d?"ok":"no");
+  c.innerHTML=(d?`<h1>Verifikasi Sertifikat</h1>${CHECK}<p class="st">Sertifikat Terverifikasi</p><p class="sub">Sertifikat ini asli dan tercatat dalam sistem.</p>
+  <dl><div class="r"><dt>Nama Penerima</dt><dd>${esc(d.nama)}</dd></div><div class="r"><dt>Nomor Sertifikat</dt><dd>${esc(d.no)}</dd></div>
+  <div class="r"><dt>Kegiatan</dt><dd>${esc(d.keg)}</dd></div><div class="r"><dt>Periode</dt><dd>${esc(d.tgl)}</dd></div><div class="r"><dt>Nilai</dt><dd>${esc(d.nilai)}</dd></div></dl>
+  <span class="badge">Diperiksa pada ${now}</span>`
+  :`<h1>Verifikasi Sertifikat</h1>${CROSS}<p class="st">Tidak Ditemukan</p><p class="sub">${id?"ID tidak terdaftar. Pastikan QR atau ID yang dimasukkan benar.":"Masukkan ID verifikasi pada sertifikat."}</p>`)+FORM+'<p class="ft">Sistem Verifikasi Sertifikat Digital</p>';
+  document.getElementById("f").onsubmit=e=>{e.preventDefault();const v=document.getElementById("i").value.trim();if(v)location.search="?id="+encodeURIComponent(v)};
+}
+(async()=>{
+  const id=new URLSearchParams(location.search).get("id");
+  if(!id){show(null,"");c.querySelector(".st").textContent="Verifikasi Sertifikat";c.className="card";return}
+  show(await lookup(id),id);
+})();
+</script></body></html>
